@@ -1,0 +1,1740 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#search-container-spacer {
+    display: none; /* Hide this completely */
+}
+
+.search-container {
+    text-align: center;
+    transition: none;
+    padding-bottom: 5px;
+    border-bottom: none;
+    margin-bottom: 5px;
+    position: relative;
+    height: auto;
+    width: 100%;
+    z-index: 100;
+}
+
+.search-container.moved-up {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    background-color: transparent;
+    padding: 15px;
+    box-shadow: none;
+    border-radius: 0;
+    max-width: 100%;
+    transform: none;
+    z-index: 100;
+}
+
+.search-container.moved-up h1.logo {
+    font-size: 1.8rem; /* Slightly reduced size */
+    margin-bottom: 0.5rem;
+    transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.search-container.moved-up .input-container {
+    max-width: 600px;
+    margin: 0 auto;
+    transform: scale(0.9);
+    transform-origin: center top;
+}
+
+.search-container.moved-up .info-message {
+    display: none;
+}
+
+/* Remove padding adjustment since we're not fixing the position */
+.search-container.moved-up ~ .loading-container,
+.search-container.moved-up ~ .results-container {
+    padding-top: 0;
+}
+
+/* For smoother sizing transitions */
+h1.logo, .input-container {
+    transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #000;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    color: #444;
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 600px;
+    border: 4px solid #1c1208 !important;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    background-color: #3a2818;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.info-message {
+    display: none;
+}
+
+.info-message p {
+    margin-bottom: 5px;
+}
+
+input {
+    flex: 1;
+    padding: 1.2rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5e9d1; /* Cream color */
+    color: #3a2818;
+}
+
+input::placeholder {
+    color: #a79b8c;
+}
+
+button {
+    padding: 1.2rem 2rem;
+    background-color: #241a10;
+    color: #e6ddd2;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    border-left: 2px solid #1c1208;
+}
+
+button:hover {
+    background-color: #1c1208;
+}
+
+.loading-container {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.loading-animation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 2rem auto;
+    max-width: 1000px;
+}
+
+.loading-image {
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Create asymmetrical loading images */
+.loading-image:nth-child(odd) {
+    width: 200px;
+    height: 250px;
+    animation: zoomInOut 3s infinite alternate;
+}
+
+.loading-image:nth-child(even) {
+    width: 150px;
+    height: 180px;
+    animation: zoomOutIn 4s infinite alternate;
+}
+
+.loading-image:nth-child(3n) {
+    width: 180px;
+    height: 230px;
+    animation: floatAndZoom 5s infinite alternate;
+}
+
+.loading-image:nth-child(4n) {
+    width: 230px;
+    height: 160px;
+    animation: pulseAndRotate 3.5s infinite alternate;
+}
+
+@keyframes zoomInOut {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomOutIn {
+    0% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(0.92);
+        opacity: 1;
+    }
+}
+
+@keyframes floatAndZoom {
+    0% {
+        transform: translateY(5px) scale(0.95);
+        opacity: 0.85;
+    }
+    100% {
+        transform: translateY(-5px) scale(1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseAndRotate {
+    0% {
+        transform: scale(0.95) rotate(-1deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.12) rotate(1deg);
+        opacity: 1;
+    }
+}
+
+.loading-status {
+    display: none;
+}
+
+.results-container {
+    margin-top: 0.35rem;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    min-height: 300px;
+    box-shadow: none;
+}
+
+/* Style to indicate when nothing is found */
+.no-results {
+    text-align: center;
+    color: #666;
+    margin: 40px 0;
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.mood-board {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 7px;
+    min-height: 200px;
+    background-color: transparent;
+    border: none;
+}
+
+.pin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    width: 100%;
+    border-radius: 0;
+    overflow: visible;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+/* Remove all ranking styles and colored borders */
+.pin-container:nth-child(1),
+.pin-container:nth-child(2),
+.pin-container:nth-child(3) {
+    box-shadow: none;
+    border-left: none;
+}
+
+/* Remove rank indicator */
+.pin-container:nth-child(1)::before,
+.pin-container:nth-child(2)::before,
+.pin-container:nth-child(3)::before {
+    display: none;
+}
+
+/* Pin title styling - matching brolly club style */
+.pin-title {
+    position: relative;
+    margin-top: 15px;
+    margin-bottom: 0;
+    padding: 8px 12px;
+    border-bottom: none;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #241a10; /* Brown to match brolly club */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+    background-color: transparent;
+    box-shadow: none;
+    font-family: 'Montserrat', sans-serif; /* Same as brolly club */
+    letter-spacing: 1px;
+    border-radius: 20px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.3s ease;
+    text-shadow: none;
+    text-transform: lowercase; /* Force text to lowercase */
+}
+
+.pin-title:after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    width: 40px;
+    height: 2px;
+    background-color: #241a10; /* Brown to match brolly club */
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.pin-image-container:hover .pin-title {
+    color: #241a10;
+    text-shadow: none;
+}
+
+/* Remove the checkmark */
+.pin-title::before {
+    content: none;
+}
+
+/* Remove the similar items count badge */
+.similar-items-count {
+    display: none;
+}
+
+/* Style for similar items - SIMPLE staggered layout with control for JS alignment */
+.similar-items {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px 0;
+    width: 100%;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    height: auto;
+    min-height: 250px;
+    gap: 20px;
+    scroll-snap-type: x mandatory;
+    overflow-y: visible !important; /* Prevent vertical scrolling */
+}
+
+/* Similar items container - height and positioning adjustments */
+.similar-items-container {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    align-self: center;
+    width: calc(100% - 350px);
+    margin-left: 20px;
+    overflow: visible;
+    min-height: 250px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Flex container adjustments for alignment */
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 10px;
+    width: 100%;
+    position: relative;
+}
+
+/* Update pin image container */
+.pin-image-container {
+    flex: 0 0 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-bottom: 0;
+    max-width: 350px;
+}
+
+/* Style pin image - make more square */
+.pin-image {
+    width: 100%;
+    max-width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transform: none;
+    transition: all 0.4s ease;
+}
+
+/* Make pin image clickable */
+.pin-image-link {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.pin-image-link:hover {
+    transform: translateY(-5px);
+}
+
+/* Add highlight box style */
+.highlight-box {
+    position: absolute;
+    border: 3px solid black;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 0 10px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    z-index: 10;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    animation: pulse-border 2s infinite alternate;
+}
+
+@keyframes pulse-border {
+    0% {
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 0 10px rgba(0, 0, 0, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8), 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Hide scrollbar */
+.similar-items::-webkit-scrollbar {
+    display: none;
+}
+
+/* Product info for larger items */
+.product-info {
+    padding: 8px 10px;
+    background-color: rgba(255, 255, 255, 0.95);
+    font-size: 0.8rem;
+    border-top: 1px solid #f0f0f0;
+    cursor: pointer;
+    height: 70px; /* Adjusted height */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+/* Product text styling for larger items */
+.product-brand {
+    font-size: 0.8rem;
+    color: #444444;
+    margin-bottom: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Fix product title text overflow with proper ellipsis */
+.product-title {
+    font-size: 0.75rem;
+    font-weight: 400;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Limit to single line */
+    -webkit-box-orient: vertical;
+    line-height: 1.2;
+    color: #666666;
+    text-decoration: none;
+    margin-bottom: 0.5px; /* Keep 2px margin, same as brand */
+    text-overflow: ellipsis; /* Add ellipsis */
+    white-space: nowrap; /* Keep on single line */
+}
+
+.price {
+    font-weight: 500;
+    color: #888888;
+    font-size: 0.75rem;
+    margin-top: 2px; /* Match the 2px margin-bottom of other elements */
+}
+
+/* Hard override for all scrollbars except horizontal ones */
+body .similar-items {
+    overflow-y: hidden !important;
+    overflow-x: auto !important;
+    height: auto !important; /* Allow JS to control this */
+}
+
+/* Basic item styling - fixed height for consistent layout */
+.similar-item {
+    flex: 0 0 200px;
+    width: 200px;
+    height: 240px; /* Adjusted height to prevent overlap */
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+    margin-right: 15px; /* Add some horizontal spacing */
+}
+
+/* Clear alternating pattern with adjusted margins to prevent overlap */
+.similar-item:nth-child(odd) {
+    margin-top: -40px;
+}
+
+.similar-item:nth-child(even) {
+    margin-top: 40px;
+}
+
+/* Image sizing - reduced height slightly */
+.similar-item img {
+    width: 200px;
+    height: 170px;
+    object-fit: cover;
+}
+
+/* Ultra-aggressive no underline rules */
+a, a:link, a:visited, a:hover, a:active {
+    text-decoration: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+*, *::before, *::after {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.similar-item, .similar-item * {
+    text-decoration: none !important;
+}
+
+/* Override any possible anchor styling */
+.pin-image-link {
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+/* Completely disable all link styling */
+:root {
+    --link-decoration: none !important;
+    --link-underline: none !important;
+}
+
+/* Hide similarity score */
+.similarity-score {
+    display: none;
+}
+
+/* Remove separator */
+hr {
+    display: none;
+}
+
+/* Remove usage note */
+.usage-note {
+    display: none;
+}
+
+.error-message {
+    display: none;
+}
+
+.loading-message {
+    display: none;
+}
+
+/* Fallback message styling */
+.fallback-note {
+    font-size: 0.9rem;
+    color: #888;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Debug panel styles */
+.debug-panel {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.debug-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.debug-controls button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
+
+#debug-output {
+    height: 300px;
+    overflow-y: auto;
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* Debug button styles */
+.debug-button {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 9999;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.debug-button:hover {
+    background-color: #e64a19;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .flex-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pin-image-container {
+        flex: 0 0 100%;
+        margin-bottom: 20px;
+        align-items: center;
+    }
+
+    .pin-title {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .similar-items-container {
+        width: 100%;
+    }
+    
+    .similar-item {
+        flex: 0 0 120px;
+        width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .similar-item {
+        flex: 0 0 110px;
+        width: 110px;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .pin-image {
+        max-width: 100%;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    input, button {
+        padding: 0.8rem;
+    }
+}
+
+/* Logo styling */
+.logo {
+    color: #241a10; /* Dark brown to match the Generate button */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 520;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    text-transform: lowercase;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+    padding: 0 10px 5px;
+    line-height: 1.2;
+    text-shadow: none;
+}
+
+.logo::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #241a10; /* Matching color for underline */
+    transform: scaleX(0);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    box-shadow: none;
+}
+
+.logo:hover::after {
+    transform: scaleX(0);
+}
+
+.umbrella-o {
+    position: relative;
+    display: inline-block;
+    font-weight: 700; /* Heavier weight for the 'o' */
+}
+
+/* Water droplet 1 */
+.umbrella-o::after {
+    content: "";
+    position: absolute;
+    bottom: 30px;
+    left: 40%;
+    width: 6px;
+    height: 10px;
+    background-color: rgba(0, 191, 255, 0.8);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform: rotate(20deg);
+    box-shadow: 0 0 5px rgba(0, 191, 255, 0.4);
+    z-index: 1;
+    animation: drip 3s infinite;
+}
+
+/* Water droplet 2 */
+.umbrella-o::before {
+    content: "";
+    position: absolute;
+    top: -36px;
+    left: -3px;
+    width: 50px;
+    height: 50px;
+    background-image: url("Umbrella SVG Icon.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+    opacity: 0.95;
+    transform: scaleX(-1) rotate(30deg);
+    filter: invert(33%) sepia(93%) saturate(7461%) hue-rotate(315deg) brightness(101%) contrast(105%); /* Hot pink */
+}
+
+/* Water droplet 3 */
+.umbrella-o .droplet-1 {
+    content: "";
+    position: absolute;
+    bottom: 20px;
+    left: 10%;
+    width: 5px;
+    height: 8px;
+    background-color: rgba(0, 191, 255, 0.7);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform: rotate(10deg);
+    box-shadow: 0 0 4px rgba(0, 191, 255, 0.3);
+    z-index: 1;
+    animation: drip 2.5s 0.5s infinite;
+}
+
+/* Water droplet 4 */
+.umbrella-o .droplet-2 {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    left: 75%;
+    width: 4px;
+    height: 7px;
+    background-color: rgba(0, 191, 255, 0.6);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform: rotate(-10deg);
+    box-shadow: 0 0 3px rgba(0, 191, 255, 0.3);
+    z-index: 1;
+    animation: drip 4s 1s infinite;
+}
+
+/* Dripping animation */
+@keyframes drip {
+    0%, 100% {
+        transform: translateY(0) rotate(15deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(15px) rotate(15deg);
+        opacity: 0;
+    }
+}
+
+.search-container.moved-up .umbrella-o::after,
+.search-container.moved-up .umbrella-o .droplet-1,
+.search-container.moved-up .umbrella-o .droplet-2 {
+    display: none; /* Hide droplets when header is fixed */
+}
+
+.search-container.moved-up .logo {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.search-container.moved-up .umbrella-o::before {
+    top: -18px;
+    left: 0px;
+    width: 32px;
+    height: 32px;
+    transform: scaleX(-1) rotate(20deg);
+    transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    filter: invert(33%) sepia(93%) saturate(7461%) hue-rotate(315deg) brightness(101%) contrast(105%); /* Hot pink */
+}
+
+.pin-image:hover {
+    transform: scale(1.02);
+}
+
+/* Remove all rotation transforms */
+.pin-container:nth-child(odd) .pin-image,
+.pin-container:nth-child(even) .pin-image,
+.pin-container:nth-child(3n) .pin-image {
+    transform: none;
+}
+
+.pin-image-container:hover .pin-title:after {
+    width: 60px;
+}
+
+/* Similar items container adjustment for larger items */
+.similar-items-container {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    align-self: center;
+    width: calc(100% - 350px);
+    margin-left: 20px;
+    height: 550px;
+    overflow: hidden;
+    position: relative;
+}
+
+.similar-items-container h4 {
+    display: none;
+}
+
+/* Remove any remaining blue underlines from links */
+a {
+    text-decoration: none !important;
+    color: inherit;
+    border-bottom: none !important;
+}
+
+/* Make sure no underlines appear in any state */
+a:hover, a:visited, a:active, a:focus {
+    text-decoration: none !important;
+    outline: none;
+    border-bottom: none !important;
+}
+
+.pin-image-link,
+.pin-image-link:hover,
+.pin-image-link:visited,
+.pin-image-link:active {
+    text-decoration: none !important;
+    color: inherit !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Custom link style to override any default colors */
+a {
+    color: inherit !important;
+}
+a[href], a[href]:link, a[href]:visited {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+/* Hard override for all scrollbars except horizontal ones */
+body .similar-items {
+    overflow-y: hidden !important;
+    overflow-x: auto !important;
+    height: auto !important; /* Allow JS to control this */
+}
+
+/* Similar items container adjustment for larger items */
+.similar-items-container {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    align-self: center;
+    width: calc(100% - 350px);
+    margin-left: 20px;
+    height: 550px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Hard override for container height */
+body .similar-items {
+    overflow-y: hidden !important;
+    overflow-x: auto !important;
+    height: 550px !important; 
+}
+
+/* Simple hover effect */
+.similar-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+/* Simplified grey separator between pins */
+.pin-container::after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent 0%, #cccccc 15%, #aaaaaa 50%, #cccccc 85%, transparent 100%);
+    margin: 15px 0;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-radius: 1px;
+}
+
+/* Remove decorative elements on the separators */
+.pin-container::before {
+    display: none;
+}
+
+/* Remove alternating decorative elements */
+.pin-container:nth-child(2n)::before,
+.pin-container:nth-child(3n)::before,
+.pin-container:nth-child(4n)::before,
+.pin-container:nth-child(5n)::before {
+    display: none;
+}
+
+/* Mobile separator styling */
+.mobile-separator::after {
+    margin: 10px auto 0 !important;
+    width: 80% !important;
+    height: 1px !important;
+}
+
+/* Mobile responsiveness - stack layout for small screens */
+@media screen and (max-width: 768px) {
+    /* Container adjustments */
+    .container {
+        padding: 10px;
+        width: 100%;
+    }
+    
+    /* Results container adjustments */
+    .results-container {
+        width: 100%;
+        padding: 0;
+    }
+    
+    /* Stack layout for flex containers */
+    .flex-container {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0 !important;
+        margin-bottom: 10px !important; /* Reduced from 20px */
+        width: 100% !important;
+    }
+
+    /* Pin image container takes full width */
+    .pin-image-container {
+        flex: 0 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    /* Responsive pin image */
+    .pin-image {
+        width: 100% !important;
+        max-width: 350px !important;
+        height: auto !important;
+        object-fit: cover !important;
+    }
+    
+    /* Detected item and heading styles for mobile */
+    .detected-item-section {
+        width: 100% !important;
+        margin-bottom: 20px !important;
+        position: relative !important;
+        border-top: none !important;
+    }
+    
+    .item-heading {
+        font-size: 1.1rem !important;
+        margin: 0 0 3px !important; 
+        padding-bottom: 5px !important;
+        width: 90% !important;
+        align-self: center !important;
+        background-color: transparent !important; /* Remove white background */
+        position: relative !important;
+        z-index: 5 !important;
+    }
+    
+    .item-heading::after {
+        width: 40px !important;
+        height: 1px !important;
+    }
+    
+    /* Make the heading stick with its rail */
+    .detected-item-section .flex-container {
+        margin-top: 0 !important;
+        margin-bottom: 5px !important;
+    }
+    
+    /* Reduce space between Pinterest image and first rail */
+    .pin-image-centered {
+        margin-bottom: 15px !important;
+    }
+    
+    /* Pin title adjustments */
+    .pin-title {
+        width: 100% !important;
+        max-width: 350px !important;
+        margin: 10px auto !important;
+        padding: 5px 10px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* CRITICAL: Force similar items container to be visible and properly sized */
+    .similar-items-container {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 10px 0 0 !important; /* Reduced bottom padding */
+        align-self: center !important;
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 200px !important; /* Reduced from 250px */
+        max-height: none !important;
+        display: block !important;
+        position: relative !important;
+        margin-top: 10px !important;
+        margin-bottom: 0 !important; /* Removed bottom margin */
+    }
+
+    /* CRITICAL: Force similar items to be visible */
+    .similar-items {
+        padding: 10px 0 0 !important; /* Removed bottom padding */
+        width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 10px !important;
+        display: flex !important;
+        height: auto !important;
+        min-height: 200px !important; /* Reduced from 240px */
+        max-height: none !important;
+        position: relative !important;
+    }
+
+    /* Remove conflicting height that might be hiding items */
+    body .similar-items {
+        height: auto !important;
+        overflow-y: visible !important;
+        min-height: 200px !important; /* Reduced from 240px */
+    }
+
+    /* Remove staggered layout on mobile */
+    .similar-item:nth-child(odd),
+    .similar-item:nth-child(even) {
+        margin-top: 0 !important;
+    }
+    
+    /* Compact layout for pins on mobile */
+    .mood-board {
+        gap: 0 !important;
+        padding: 5px !important;
+    }
+    
+    /* Force similar items to be visible and properly sized */
+    .similar-item {
+        flex: 0 0 150px !important;
+        width: 150px !important;
+        height: 220px !important;
+        display: block !important;
+        margin: 0 8px 0 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+    }
+    
+    /* Adjust image size within similar items */
+    .similar-item img {
+        width: 150px !important;
+        height: 150px !important;
+        display: block !important;
+    }
+
+    /* Make product info visible */
+    .product-info {
+        display: block !important;
+        height: 70px !important;
+        visibility: visible !important;
+        overflow: hidden !important;
+    }
+    
+    /* Pin container with reduced margin */
+    .pin-container {
+        margin-bottom: 30px !important; /* Adjusted for multi-rail layout */
+    }
+    
+    /* Grey separator adjustment - thinner on mobile */
+    .pin-container::after {
+        margin: 10px auto 0 !important; /* Center aligned */
+        height: 1px !important;
+        width: 80% !important; /* Reduced width */
+    }
+
+    /* Make the search box scale better on mobile */
+    .search-container {
+        width: 95%;
+        max-width: 95%;
+        padding: 20px 10px;
+    }
+
+    .input-container {
+        width: 100%;
+    }
+
+    input#pinterest-url {
+        width: 70%;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    button#generate-btn {
+        width: 30%;
+        min-width: 80px;
+        font-size: 14px;
+        padding: 10px;
+    }
+    
+    /* Adjust logo size for mobile */
+    .logo {
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+}
+
+/* Pinterest image centered at top */
+.pin-image-centered {
+    margin: 0 auto 20px;
+    max-width: 350px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Section for each detected item - mobile optimized */
+.detected-item-section {
+    margin-bottom: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Item heading styles - adjusted for mobile */
+.item-heading {
+    font-size: 1.2rem;
+    margin: 15px 0 10px;
+    color: #241a10;
+    text-align: center;
+    font-weight: 500;
+    position: relative;
+    width: 100%;
+    padding-bottom: 8px;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    order: 0; /* Default order for desktop */
+}
+
+.item-heading::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 50px;
+    height: 2px;
+    background-color: #241a10;
+    transform: translateX(-50%);
+}
+
+@media screen and (max-width: 768px) {
+    /* Keep heading attached to rail in mobile view */
+    .detected-item-section {
+        margin-bottom: 20px !important;
+        width: 100% !important;
+        position: relative !important;
+        border-top: none !important;
+    }
+    
+    .item-heading {
+        font-size: 1.1rem !important;
+        margin: 0 0 3px !important; 
+        padding-bottom: 5px !important;
+        width: 90% !important;
+        align-self: center !important;
+        background-color: transparent !important; /* Remove white background */
+        position: relative !important;
+        z-index: 5 !important;
+    }
+    
+    .item-heading::after {
+        width: 40px !important;
+        height: 1px !important;
+    }
+    
+    /* Make the heading stick with its rail */
+    .detected-item-section .flex-container {
+        margin-top: 0 !important;
+        margin-bottom: 5px !important;
+    }
+    
+    /* Reduce space between Pinterest image and first rail */
+    .pin-image-centered {
+        margin-bottom: 15px !important;
+    }
+    
+    /* Adjust similar items container to connect with heading */
+    .similar-items-container {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Create visual connection between heading and rail */
+    .similar-items {
+        border-top: none !important;
+        padding-top: 4px !important;
+    }
+}
+
+/* Updated flex container for multiple item rails */
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Pin container separator */
+.pin-container::after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 90%;
+    background: linear-gradient(90deg, transparent 0%, #cccccc 15%, #aaaaaa 50%, #cccccc 85%, transparent 100%);
+    margin: 20px auto 0;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Override the old pin title style */
+.pin-title {
+    text-align: center;
+    margin: 0 auto 15px;
+    width: 80%;
+    max-width: 500px;
+}
+
+/* Mobile responsiveness for the new layout */
+@media screen and (max-width: 768px) {
+    .pin-image-centered {
+        max-width: 300px;
+    }
+    
+    .item-heading {
+        font-size: 1.1rem;
+        margin: 10px 0 8px;
+    }
+    
+    .detected-item-section {
+        margin-bottom: 20px;
+    }
+    
+    .flex-container {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    .similar-items-container {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+}
+
+/* Pin container structure for desktop/mobile layouts */
+.pin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    width: 100%;
+    border-radius: 0;
+    overflow: visible;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+/* Pin container separator */
+.pin-container::after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 90%;
+    background: linear-gradient(90deg, transparent 0%, #cccccc 15%, #aaaaaa 50%, #cccccc 85%, transparent 100%);
+    margin: 20px auto 0;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Desktop layout: image on left, rails on right */
+@media screen and (min-width: 769px) {
+    .pin-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    
+    .pin-image-outer-container {
+        position: sticky;
+        top: 20px;
+        width: 400px;  /* Increased from 350px */
+        max-width: 400px;  /* Increased from 350px */
+        margin-right: 30px;
+        align-self: flex-start;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pin-image-container {
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pin-image {
+        max-width: 400px; /* Increased from 350px */
+        height: auto;
+        object-fit: contain;
+    }
+    
+    .flex-container {
+        display: flex;
+        flex-direction: row !important;
+        justify-content: flex-start;
+        width: calc(100% - 430px); /* Adjusted for larger image */
+        margin-bottom: 5px; /* Reduced from 20px */
+        margin-left: auto;
+    }
+    
+    /* Center rails vertically */
+    .pin-container {
+        display: flex;
+        align-items: center;
+    }
+    
+    /* When there's only one rail, center it */
+    .pin-container:has(.flex-container:only-of-type) .flex-container {
+        align-self: center !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    
+    /* For multiple rails, reduce spacing */
+    .pin-container:has(.flex-container:nth-of-type(2)) .flex-container {
+        flex: 0 0 calc(100% - 430px);
+        margin-top: 5px !important; /* Reduced from 10px */
+        margin-bottom: 5px !important; /* Reduced from 10px */
+    }
+    
+    .detected-item-section {
+        width: 100% !important;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .similar-items-container {
+        width: 100% !important;
+        margin-left: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+    }
+    
+    .similar-items {
+        padding: 20px 0 !important;
+        height: auto !important;
+        margin: 0 auto !important;
+        overflow-y: visible !important; /* Stop vertical scrolling */
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+    }
+}
+
+/* Mobile layout: stacked image and rails */
+@media screen and (max-width: 768px) {
+    .pin-image-outer-container {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pin-image-container {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .flex-container {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0 !important;
+        margin-bottom: 10px !important;
+        width: 100% !important;
+    }
+}
+
+/* Mobile view class for conditional styling */
+.pin-container.mobile-view {
+    flex-direction: column !important;
+    align-items: center !important;
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+}
+
+.pin-container.mobile-view .pin-image-outer-container {
+    position: relative !important;
+    top: auto !important;
+    margin-right: 0 !important;
+    margin: 0 auto 15px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 300px !important;
+}
+
+.pin-container.mobile-view .pin-image-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+.pin-container.mobile-view .pin-image {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+@media screen and (max-width: 768px) {
+    /* Force center alignment for Pinterest image container */
+    .pin-image-outer-container {
+        margin: 0 auto 15px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        max-width: 300px !important;
+    }
+    
+    /* Force center alignment for Pinterest image */
+    .pin-image-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+    
+    /* Force Pinterest image to be responsive */
+    .pin-image {
+        max-width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+    
+    /* Force rails to be centered */
+    .similar-items-container {
+        width: 100% !important;
+        margin: 0 auto !important;
+    }
+    
+    /* Force rails to fill width */
+    .similar-items {
+        width: 100% !important;
+    }
+}
+
+/* For desktop view, ensure rails don't have vertical scroll */
+@media screen and (min-width: 769px) {
+    .similar-items {
+        overflow-y: visible !important;
+        scrollbar-width: thin;
+    }
+    
+    /* For single rail, ensure proper centering */
+    .pin-container:has(.flex-container:only-of-type) {
+        justify-content: center;
+    }
+    
+    /* Spacing between multiple rails for same image */
+    .pin-container .flex-container + .flex-container {
+        margin-top: 0 !important;
+    }
+}
+
+/* Mobile separator styling */
+.mobile-view::after {
+    margin: 10px auto 0 !important;
+    width: 80% !important;
+    height: 1px !important;
+}
+
+/* Mobile view specific - Flex container */
+.pin-container.mobile-view .flex-container {
+    flex-direction: column !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    align-items: center !important;
+}
+
+/* Mobile view specific - Detected item section */
+.pin-container.mobile-view .detected-item-section {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+/* Single rail desktop centering */
+@media screen and (min-width: 769px) {
+    .pin-container:has(.flex-container:only-of-type) {
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    
+    .pin-container:has(.flex-container:only-of-type) .flex-container {
+        align-self: center !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    .pin-container:has(.flex-container:only-of-type) .detected-item-section {
+        align-items: center !important;
+    }
+}
+
+/* Specifically enforce mobile centering */
+@media screen and (max-width: 768px) {
+    /* Always center Pinterest image in mobile view */
+    .pin-image-outer-container,
+    .pin-image-container,
+    .pin-image {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: center !important;
+    }
+    
+    /* Center the image container itself */
+    .pin-image-outer-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        max-width: 300px !important;
+    }
+    
+    /* Ensure Pinterest image itself is centered */
+    .pin-image {
+        display: block !important;
+        margin: 0 auto !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Force mobile layout for all screen sizes */
+@media screen {
+    body {
+        max-width: 480px;
+        margin: 0 auto;
+        overflow-x: hidden;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: 480px;
+        padding: 10px;
+        margin: 0 auto;
+    }
+    
+    .results-container {
+        width: 100%;
+        max-width: 480px;
+        padding: 0;
+        margin: 0 auto;
+    }
+    
+    /* Always use mobile layout */
+    .pin-container {
+        flex-direction: column !important;
+        align-items: center !important;
+        display: flex !important;
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    
+    /* Always show Pinterest image centered */
+    .pin-image-outer-container {
+        position: relative !important;
+        top: auto !important;
+        margin: 0 auto 15px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        max-width: 300px !important;
+    }
+    
+    /* Style flex containers like mobile always */
+    .flex-container {
+        flex-direction: column !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        align-items: center !important;
+    }
+    
+    /* Style detected item sections for mobile always */
+    .detected-item-section {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    /* Turn off desktop-specific styles */
+    .pin-container:has(.flex-container) .flex-container {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+}
+
+/* Remove desktop media query rules - everything uses mobile layout */
+@media screen and (min-width: 769px) {
+    .pin-container, 
+    .flex-container,
+    .detected-item-section,
+    .similar-items-container,
+    .similar-items {
+        /* Inherit all mobile styles */
+    }
+} 

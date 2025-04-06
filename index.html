@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Brolly Club</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Override browser default styling for links */
+        a, a:link, a:visited, a:hover, a:active, a:focus {
+            text-decoration: none !important;
+            color: inherit !important;
+            border-bottom: none !important;
+            outline: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-container" id="search-container">
+            <h1 class="logo">the br<span class="umbrella-o">o<span class="droplet-1"></span><span class="droplet-2"></span></span>lly club</h1>
+            <div class="input-container">
+                <input type="text" id="pinterest-url" placeholder="Enter your Board">
+                <button id="generate-btn">Generate</button>
+            </div>
+        </div>
+
+        <div id="loading-container" class="loading-container">
+            <div id="loading-animation" class="loading-animation"></div>
+            <div id="loading-status" class="loading-status"></div>
+        </div>
+
+        <div class="results-container" id="results-container" style="display: none">
+            <div class="mood-board" id="mood-board"></div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html> 
