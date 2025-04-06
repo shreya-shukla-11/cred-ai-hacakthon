@@ -66,7 +66,7 @@ def query_litellm(
 ) -> str:
 
     api_base = "https://api.rabbithole.cred.club"
-    api_key = "sk-L_m2RmnMLNwJ5PPkW7ZXOA"
+    api_key = ""
     
     if not api_key:
         raise ValueError("API key is required. Provide it as a parameter or set LITELLM_API_KEY environment variable.")
